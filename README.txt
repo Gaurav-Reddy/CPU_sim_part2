@@ -1,5 +1,6 @@
 To run the program please give -- ./apex_sim display 20 -- //you have to give soome kind of number other wise it wont work
 
+ROB,LSQ and IQ
 
 reference
 
