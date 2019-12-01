@@ -1,2 +1,92 @@
-1. Recheck the forwarding
-2. Reimplement Jump properly
+1. Fetch 
+   same as earlier
+
+--------------------------------------------------------------------------------------------
+2.DEcode/REname
+---------------------------------------------------------------------------------------
+
+24 physical Register
+Physical registers are allocated in the increasing order of their address.
+Physical register freed up in a cycle can be reallocated in the same cycle
+Each PH register has extensin to hols falg values.
+Dispatch of instruction to IssueQ,ROB,LSQ
+
+If HALT
+    --stalls D/RN stage
+    ---Add only ROB entry athe end of ROB(IO entry not needed)
+     --When head of ROB return control to user prompt
+-------------------------------------------------------------------------------------------------
+3.Issue
+------------------------------------------------------------------------------------------------
+Enty made in IssueQ,ROB,LSQ
+
+IssueQ(){
+
+Entries -8( suggestion :Circular Q)
+1.Entry made in Issue Q.
+2.Reading the i/p operand
+2.Waiting for i/p oerand
+2.Checking for availability of FU
+3.Instruction wakeup and issue to corresponding FU(can be issued to multipleFU units simultaneously)
+4.When 2 instruction need same FU in same cycle, the instruction with lowest PC value is chosen for issue.
+5.IQ entry freed up at the end of this cycle if it issued.
+
+}
+
+LSQ(){
+
+Has 6 Entries.
+
+1.Check if LOAD/STORE/LDR/STR
+2.If so entry made in LSQ
+3.Check conditions for Starting m/m operation(head of LSQ,HEAD of ROB,valid m/m address)
+4.LOAD cannot bypass earlier STORE
+}
+
+ROB(){
+
+1.Entries-  12 (Circular Q)
+2.Entry made in ROB for each instruction
+
+}
+
+--------------------------------------------------------------------------------------
+Execute
+---------------------------------------------------------------------------------------
+
+if MUL
+   Pipelined into 3 stages --MUL1,MUL2,MUL3(single cycle delay in each cycle)
+
+If (INT FU) ADD,ADDL,SUB,SUBL,Logical operation,LOAD,STORE,LDR,STR
+      if LOAD/STORE  ->Address calculation and writing to LSQ
+    Pipelined into 2 stages -- INT1,INT2(single cycle delay in each cycle)
+    ---Wakeup tag broadcast from final stage
+
+IF Branch
+      has adder to claculate target address
+      if misprediction  Please Fill this *****************************************Please Fill this
+      Speculative execution of deapth2  ******************************Please Fill this
+    
+
+if Memory operation
+
+      No pipelining but take 3 cycle to complete
+      ---Wakeup tag broadcast from 3rd cycle
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
