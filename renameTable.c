@@ -1,5 +1,13 @@
-cpu.h
-------
+//cpu.h
+//------		#change cpu.h file
+#include <stdio.h>
+#include <stdlib.h>
+#include <string.h>
+
+#include "cpu.h"
+
+#define RAT_SIZE 16
+#define PRF_SIZE 24
 
 struct renameTable {
     int slot_id;
@@ -26,8 +34,14 @@ int Physical_Register_File PRF[24];
 
 
 /***************************************** RenameTable functions *********************************************/
-int initializeRenameTable(APEX_CPU *cpu);
+int initializeRenameTable(APEX_CPU *cpu) {
+  for (int i = 0; i < RAT_SIZE; i++) {
+    cpu->renameTable[i].value = -1;
+    cpu->renameTable[i].zFlag = -1;
+  }
 
+  return 0;
+}
 
 int registerRenaming(APEX_CPU *cpu);
 
@@ -54,6 +68,13 @@ int getRenamedRegisterForSrcReg(int rs, APEX_CPU *cpu) {
          return cpu->PRF[rs].value;  
         else {
          return cpu->ARF[rs];
+ for (int j = 0; j < URF_SIZE; j++) {
+    if (cpu->unifiedRF[j].isAvailable) {
+      cpu->renameTable[rd].value = j;
+      cpu->unifiedRF[j].isAvailable = 0;
+      cpu->unifiedRF[j].destLock = 1;
+      break;
+    }
 
   }
 

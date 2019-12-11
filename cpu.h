@@ -21,6 +21,17 @@ enum
   NUM_STAGES
 };
 
+struct renameTable {
+    int value;
+    int zFlag;
+};
+struct PRFEntry {
+    int value;
+    int isAvailable;
+    int destLock;
+};
+
+
 /* Format of an APEX instruction  */
 typedef struct APEX_Instruction
 {
@@ -81,7 +92,9 @@ typedef struct APEX_CPU
 
   /* Some stats */
   int ins_completed;
-
+  struct renameTable renameTable[16];	//added
+   struct PRFEntry PRF[24];				//added
+	int zFlag;
 } APEX_CPU;
 
 APEX_Instruction*
